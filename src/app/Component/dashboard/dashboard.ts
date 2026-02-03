@@ -2,16 +2,16 @@ import { Component } from '@angular/core';
 import { Firebase } from '../../services/firebase';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Header } from '../header/header';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule,Header],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
 export class Dashboard {
-
-   users: any[] = [];
+  users: any[] = [];
 
   showModal = false;
   isEdit = false;
