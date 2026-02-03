@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Firebase } from '../../services/firebase';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -10,8 +10,13 @@ import { Header } from '../header/header';
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
-export class Dashboard {
+export class Dashboard implements OnInit {
   users: any[] = [];
+  constructor(
+    private firebase:Firebase
+  ){
+
+  }
 
   showModal = false;
   isEdit = false;
@@ -24,6 +29,14 @@ export class Dashboard {
     phone: '',
     rank: '',
   };
+  ngOnInit(): void {
+      this.firebase.getUsers((data)=>{
+        this.users = [];
+        for (let id in data) {
+          this.users.push({ id, ...data[id] });
+        } 
+      })
+  }
 
   openModal() {
     this.resetForm();
@@ -38,7 +51,7 @@ export class Dashboard {
     if (this.isEdit && this.editIndex !== null) {
       this.users[this.editIndex] = { ...this.form };
     } else {
-      this.users.push({ ...this.form });
+      this.firebase.addUser(this.form);
     }
     this.closeModal();
   }
@@ -50,10 +63,9 @@ export class Dashboard {
     this.showModal = true;
   }
 
-  deleteUser(index: number) {
-    if (confirm('Are you sure you want to delete?')) {
-      this.users.splice(index, 1);
-    }
+  deleteUser(user:any) {
+    console.log(user)
+    this.firebase.deleteUser(user.id);
   }
 
   resetForm() {
