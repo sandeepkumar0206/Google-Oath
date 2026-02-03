@@ -1,0 +1,38 @@
+.login-wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+}
+
+.login-card {
+  background: white;
+  padding: 32px;
+  width: 360px;
+  border-radius: 14px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.login-card h2 {
+  margin-bottom: 6px;
+  font-size: 22px;
+  color: #111827;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 24px;
+}
+
+.google-btn {
+  display: flex;
+  justify-content: center;
+}
+
+.login-card:hover {
+  transform: translateY(-2px);
+  transition: 0.2s ease;
+}

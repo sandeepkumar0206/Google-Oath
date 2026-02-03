@@ -1,8 +1,62 @@
-<button (click)="addUser()">Add User</button>
-<h1>addd</h1>
+<div class="container">
+  <div class="header">
+    <h2>User Dashboard</h2>
+    <button class="add-btn" (click)="openModal()">+ Add User</button>
+  </div>
 
-<ul>
-  <li *ngFor="let user of users">
-    {{ user.name }} - {{ user.role }}
-  </li>
-</ul>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Rank</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let user of users; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ user.firstName }} {{ user.lastName }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.phone }}</td>
+        <td>{{ user.rank }}</td>
+        <td>
+          <button class="edit-btn" (click)="editUser(user, i)">Edit</button>
+          <button class="delete-btn" (click)="deleteUser(i)">Delete</button>
+        </td>
+      </tr>
+
+      <tr *ngIf="users.length === 0">
+        <td colspan="6" class="empty">No users found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal -->
+<div class="modal-backdrop" *ngIf="showModal">
+  <div class="modal">
+    <h3>{{ isEdit ? 'Edit User' : 'Add User' }}</h3>
+
+    <form (ngSubmit)="saveUser()">
+      <div class="row">
+        <input type="text" placeholder="First Name" [(ngModel)]="form.firstName" name="firstName" required />
+        <input type="text" placeholder="Last Name" [(ngModel)]="form.lastName" name="lastName" required />
+      </div>
+
+      <input type="email" placeholder="Email" [(ngModel)]="form.email" name="email" required />
+      <input type="text" placeholder="Phone Number" [(ngModel)]="form.phone" name="phone" required />
+      <input type="number" placeholder="Ranking" [(ngModel)]="form.rank" name="rank" required />
+
+      <div class="modal-actions">
+        <button type="button" class="cancel" (click)="closeModal()">Cancel</button>
+        <button type="submit" class="save">
+          {{ isEdit ? 'Update' : 'Save' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

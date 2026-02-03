@@ -23,6 +23,7 @@ export class Login {
   }
 
   handleLogin(response: any) {
+    console.log(response)
     localStorage.setItem('token',response.credential);
     window.location.href='/dashboard';
   }
