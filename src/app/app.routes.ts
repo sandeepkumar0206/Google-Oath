@@ -6,12 +6,14 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () =>
-      import('./Component/login/login').then(m => m.Login)
+      import('./Component/login/login').then(m => m.Login),
+      canActivate: [loginGuardGuard],
   },
   {
     path: 'dashboard',
     loadComponent: () =>
-      import('./Component/dashboard/dashboard').then(m => m.Dashboard)
+      import('./Component/dashboard/dashboard').then(m => m.Dashboard),
+      canActivate: [authGuardGuard]
   },
   { path: '**', redirectTo: 'login' }
 ];
