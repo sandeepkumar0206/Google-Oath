@@ -3,15 +3,17 @@ import { Firebase } from '../../services/firebase';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Header } from '../header/header';
+import { Loader } from '../../Shared/loader/loader';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule,FormsModule,Header],
+  imports: [CommonModule,FormsModule,Header,Loader],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
 export class Dashboard implements OnInit {
   users: any[] = [];
+  loading=false;
   constructor(
     private firebase:Firebase
   ){
@@ -30,12 +32,15 @@ export class Dashboard implements OnInit {
     rank: '',
   };
   ngOnInit(): void {
+    this.loading=true;
       this.firebase.getUsers((data)=>{
         this.users = [];
         for (let id in data) {
           this.users.push({ id, ...data[id] });
         } 
       })
+    //this.loading=true;
+
   }
 
   openModal() {
@@ -48,12 +53,15 @@ export class Dashboard implements OnInit {
   }
 
   saveUser() {
+    //this.loading=true;
+
     if (this.isEdit && this.editIndex !== null) {
       this.users[this.editIndex] = { ...this.form };
     } else {
       this.firebase.addUser(this.form);
     }
     this.closeModal();
+    //this.loading=true;
   }
 
   editUser(user: any, index: number) {
@@ -65,7 +73,10 @@ export class Dashboard implements OnInit {
 
   deleteUser(user:any) {
     console.log(user)
+    //this.loading=true;
     this.firebase.deleteUser(user.id);
+    //this.loading=true;
+
   }
 
   resetForm() {

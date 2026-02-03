@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { deleteUser } from '@angular/fire/auth';
 import { Database, onValue, push, ref, remove } from '@angular/fire/database';
-import { deleteDoc, doc } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
